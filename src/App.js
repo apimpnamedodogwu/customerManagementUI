@@ -14,8 +14,10 @@ function App() {
       <BrowserRouter>
         <Routes >
           <Route element={<Login />} path={'/'} />
+          <Route element={<Login />} path={'/login'} />
           <Route element={<AddCustomer />} path={'/add'} />
           <Route element={<UpdateCustomers />} path={'/update'} />
+          <Route element={<UpdateCustomers />} path={'/update/:id'} />
           <Route element={<ListOfCustomers />} path={'/list'} />
 
         </Routes>

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CustomButton from '../components/button'
 import Input from '../components/input'
 import Layout from '../components/layout'
@@ -8,6 +8,9 @@ import Layout from '../components/layout'
 function AddCustomer(props) {
     const [state, setState] = useState({})
     const onChange = (e) => { setState({ ...state, [e.target.name]: e.target.value }) }
+    useEffect(() => {
+        if (!localStorage.getItem('token')) window.location.assign('/')
+    }, [])
     const submit = () => {
         try {
             axios.post('https://customerprofilemanagementsystem.up.railway.app/api/v1/customer', state,
@@ -17,7 +20,7 @@ function AddCustomer(props) {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                 })
-                alert('User created successfully')
+            alert('User created successfully')
         } catch (error) {
             console.log(error)
             throw error

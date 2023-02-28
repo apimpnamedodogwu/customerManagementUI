@@ -34,6 +34,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const firstLetter = (string = '') => string.charAt(0) + string.substring(1, string.length).toLowerCase()
 const remove_ = (string = '') => string.includes('_') ? firstLetter(string.replace('_', ' ')) : firstLetter(string)
 function ListOfCustomers(props) {
+
+    useEffect(() => {
+        if (!localStorage.getItem('token')) window.location.assign('/')
+    }, [])
     const [customers, setCustomers] = useState([])
     useEffect(() => {
         const fetchusers = async () => {
@@ -45,7 +49,6 @@ function ListOfCustomers(props) {
             setCustomers(data)
         }
         fetchusers()
-
     }, [])
     return (
         <Layout header={'List of Customers'}>
@@ -67,7 +70,7 @@ function ListOfCustomers(props) {
                                 <StyledTableCell align="left">{firstLetter(row.lastName)}</StyledTableCell>
                                 <StyledTableCell align="left">{firstLetter(row.productPlan)}</StyledTableCell>
                                 <StyledTableCell align="left">{row.productFeature?.map(x => <div>{remove_(x)}</div>)}</StyledTableCell>
-                                <StyledTableCell align="left"><Button sx={{ textTransform: 'inherit' }} variant='contained'>Update</Button></StyledTableCell>
+                                <StyledTableCell align="left"><Button sx={{ textTransform: 'inherit' }} variant='contained' component='a' href={`/update/${row.id}`} >Update</Button></StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

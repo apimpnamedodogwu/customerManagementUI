@@ -12,10 +12,7 @@ function UpdateCustomers(props) {
     const [state, setState] = useState({})
     const onChange = (e) => { setState({ ...state, [e.target.name]: e.target.value }) }
     const submit = () => {
-        let x = state;
-        // delete x["id"]
-        delete x["email"]
-        delete x["productFeature"]
+        let x = { firstName: state.firstName, lastName: state?.lastName, productPlan: state?.productPlan }
         try {
             axios.put(`https://customerprofilemanagementsystem.up.railway.app/api/v1/customer?id=${state?.id}&productPlan=${state?.productPlan}`, x,
                 {
@@ -43,9 +40,9 @@ function UpdateCustomers(props) {
     }, [id])
     return (
         <Layout header={'Update Customer'} submit={submit}>
-            <Input onChange={onChange} required name={'firstName'} value={state?.firstName} />
-            <Input onChange={onChange} required name={'lastName'} value={state?.lastName} />
-            <Input onChange={onChange} required name={'email'} type='email' value={state?.email} disabled />
+            <Input onChange={onChange} required name={'firstName'} disabled value={state?.firstName} />
+            <Input onChange={onChange} required name={'lastName'} disabled value={state?.lastName} />
+            <Input onChange={onChange} required name={'email'} type='email' disabled value={state?.email}   />
             {/* <Input onChange={onChange} required name={'phone'} label={'Phone'} value={state?.phoneNumber} type='tel' disabled /> */}
             <Box name='productPlan' onChange={onChange} component='select' value={state?.productPlan} sx={{ width: '100%', my: 1, py: 2, px: 2, borderRadius: '5px' }}>
                 <Box component={'option'} sx={{ width: '100%' }} value='BASIC'>

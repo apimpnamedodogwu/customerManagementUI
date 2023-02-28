@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 // import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 import CustomButton from '../components/button'
 import Input from '../components/input'
 import Layout from '../components/layout'
@@ -9,14 +10,13 @@ import { baseUrl } from '../util'
 function Login(props) {
     const [state, setState] = useState({})
     const onChange = (e) => { setState({ ...state, [e.target.name]: e.target.value }) }
-    const submit = () => {
+    const submit = async () => {
         try {
-            axios.post(baseUrl + '/login', state, { headers: { 'Content-Type': 'application/json' } })
-            // window.location.assign('/add')
+            const { data } = await axios.post(baseUrl + '/user/login', state, { headers: { 'Content-Type': 'application/json' } })
+            localStorage.setItem('token', data?.token)
+            window.location.assign('/add')
         } catch (error) {
-            // alert(error)
-            console.log(error)
-            // toast.error(error)
+            error?.response?.status === 401 ? alert('unauthorized user') : alert('Network error')
         }
     }
     return (
@@ -28,3 +28,4 @@ function Login(props) {
     )
 }
 export default Login
+

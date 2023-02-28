@@ -1,1 +1,1 @@
-export const baseUrl = 'baseUrlhere'
+export const baseUrl = 'https://customerprofilemanagementsystem.up.railway.app/api/v1'
